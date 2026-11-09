@@ -20,15 +20,4 @@ Este repositório reúne explicações, demonstrações e uma atividade prática
 - `assets/js`: interações locais das páginas.
 - `exemplos/Main.java`: programa Java de demonstração.
 
-## Como publicar no GitHub Pages
-
-1. Crie um repositório no GitHub e envie **todos os arquivos e pastas** mantendo a mesma estrutura.
-2. Em **Settings → Pages**, escolha **Deploy from a branch**.
-3. Selecione a branch principal (`main`) e a pasta `/(root)`, depois salve.
-4. Após a publicação, abra o link informado pelo GitHub. A página principal será `index.html`.
-
-Este site é estático, não exige servidor, conta de usuário ou instalação de dependências. A conferência de respostas e a simulação de locações são realizadas no navegador. As respostas podem ser mantidas no armazenamento local, quando o navegador permite. Não há envio automático de respostas ao professor.
-
-**Nota de estudo:** as conferências dos trechos Java verificam padrões esperados e não substituem um compilador Java. Para conferir o comportamento real, execute o código no OneCompiler, Eclipse ou outra IDE Java.
-
 © 2026 Professor Rodrigo Moreira. Material autoral. Reprodução e redistribuição mediante autorização do autor.
