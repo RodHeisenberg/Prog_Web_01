@@ -1,0 +1,95 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f7fb"><meta name="description" content="Laboratório interativo de POO com um único cenário: LocaFácil. Professor Rodrigo Moreira."><title>Laboratório LocaFácil | Professor Rodrigo Moreira</title><link rel="icon" href="assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/style.css"></head><body><div class="topline"></div><header class="site-header"><div class="nav-shell"><a class="brand" href="index.html"><span class="brand-mark">RM</span><span><strong>Professor Rodrigo Moreira</strong><small>Material autoral de tecnologia</small></span></a><button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="principal">Menu</button><nav class="nav-links" data-nav id="principal" aria-label="Navegação principal"><a href="index.html">Conteúdo</a><a href="laboratorio.html" aria-current="page">Laboratório</a><a href="atividade.html">Atividade prática</a></nav></div></header>
+<main class="page"><div class="subhero"><span class="eyebrow">Aprender fazendo</span><h1>Laboratório interativo <span style="color:#315bcc">LocaFácil</span></h1><p>Agora a teoria vira observação e prática guiada. Cada demonstração acontece no mesmo negócio fictício: uma locadora que cadastra equipamentos, registra clientes e controla locações.</p><div class="actions"><a class="btn ghost" href="index.html">← Rever conceitos</a><a class="btn" href="#passo1">Iniciar simulações</a></div></div>
+<div class="tip"><strong>Como usar:</strong> acompanhe a explicação, altere os dados e observe o que acontece. As simulações funcionam no navegador com JavaScript para ilustrar conceitos. A execução real do código Java acontece em um compilador Java.</div>
+<nav class="module-nav" aria-label="Etapas do laboratório"><a href="#passo1">1. Entidades</a><a href="#passo2">2. Classes e objetos</a><a href="#passo3">3. Atributos e métodos</a><a href="#passo4">4. Abstração</a><a href="#passo5">5. Modelagem</a><a href="#passo6">6. Java</a></nav>
+
+<section class="lab-step" id="passo1"><div class="toprow"><span class="step-num">01</span><div><h2>Identificando entidades da locadora</h2><p class="intro">Observe o cenário e explore os componentes que deverão existir no sistema.</p></div></div><div class="story" style="margin-bottom:18px"><div><span class="pill">História do negócio</span><h3>Ana quer alugar um projetor por 3 dias.</h3><p>Ana chega à LocaFácil. O atendente consulta o projetor, abre uma locação, calcula o valor de R$ 240,00, registra o pagamento e acompanha a devolução.</p></div><aside><span class="smallcap" style="color:#c0d7fb">Sequência observada</span><p>Cliente → Equipamento → Locação → Pagamento → Devolução</p></aside></div><div class="flow-nodes" id="entity-map"><button class="node active" type="button" data-entity="Cliente"><strong>Cliente</strong><span>Quem aluga</span></button><button class="node" type="button" data-entity="Equipamento"><strong>Equipamento</strong><span>O que é alugado</span></button><button class="node" type="button" data-entity="Locacao"><strong>Locacao</strong><span>Registro da operação</span></button><button class="node" type="button" data-entity="Pagamento"><strong>Pagamento</strong><span>Registro financeiro</span></button><button class="node" type="button" data-entity="Funcionario"><strong>Funcionario</strong><span>Quem atende</span></button></div><div id="entity-detail" class="model-detail" aria-live="polite"></div><div class="tip success">Perceba: entidades do negócio podem se tornar classes. Cada classe terá uma responsabilidade, e objetos concretos representarão dados reais.</div></section>
+
+<section class="lab-step" id="passo2"><div class="toprow"><span class="step-num">02</span><div><h2>Uma classe, vários objetos</h2><p class="intro">Crie equipamentos diferentes usando a mesma estrutura. Depois compare os valores dos objetos.</p></div></div><div class="grid two"><div><span class="mini-label">Modelo da classe</span><div class="codebox"><div class="codebar"><span>Estrutura de Equipamento</span></div><pre><code>class Equipamento {
+    String codigo;
+    String descricao;
+    double valorDiaria;
+    boolean disponivel;
+}</code></pre></div></div><div><span class="mini-label">Adicionar uma instância</span><form id="create-equipment"><div class="form-grid"><div class="field"><label for="equip-codigo">Código</label><input id="equip-codigo" maxlength="20" value="EQ-103" required></div><div class="field"><label for="equip-diaria">Valor da diária (R$)</label><input id="equip-diaria" type="number" min="1" step="0.01" value="65" required></div><div class="field" style="grid-column:1/-1"><label for="equip-descricao">Descrição</label><input id="equip-descricao" maxlength="55" value="Caixa de Som" required></div></div><button class="btn" style="margin-top:13px" type="submit">Criar objeto</button><button class="btn ghost" id="clear-equipment" type="button" style="margin-top:13px">Restaurar exemplos</button></form><p class="task-feedback" id="create-feedback" role="status"></p></div></div><div class="objects-render" id="equipment-list" aria-live="polite"></div><div class="tip">O programa cria instâncias distintas. Alterar um equipamento não muda os atributos dos outros. No código Java real, usamos <span class="inline-code">new Equipamento(...)</span>.</div></section>
+
+<section class="lab-step" id="passo3"><div class="toprow"><span class="step-num">03</span><div><h2>Os métodos alteram o estado</h2><p class="intro">Acompanhe o mesmo Projetor LED. Tente alugá-lo, devolvê-lo e enviá-lo para manutenção.</p></div></div><div class="state-panel"><div class="state-visual"><span class="mini-label">Objeto selecionado • EQ-101</span><h3>Projetor LED</h3><p style="margin:3px 0 10px;color:var(--muted)">valorDiaria: <b>R$ 80,00</b></p><span class="status" id="rental-status">Disponível</span><div class="state-actions"><button class="btn" type="button" data-action="alugar">alugar()</button><button class="btn ghost" type="button" data-action="devolver">devolver()</button><button class="btn ghost" type="button" data-action="manutencao">enviarParaManutencao()</button><button class="btn ghost" type="button" data-action="liberar">liberarManutencao()</button></div></div><div><span class="mini-label">Histórico de ações executadas</span><div class="log" id="action-log" aria-live="polite"><p>Objeto criado com estado disponível.</p></div><p class="text-small">Regra: só é possível alugar um equipamento disponível. Um equipamento alugado não deve ser colocado em manutenção antes da devolução.</p></div></div><div class="grid two" style="margin-top:17px"><div class="definition"><strong>Atributo observado</strong><p><span class="inline-code">status</span> representa o estado do equipamento. Na versão introdutória em Java, também será usado o campo <span class="inline-code">disponivel</span>.</p></div><div class="definition"><strong>Métodos observados</strong><p>Uma ação realiza uma verificação e, quando permitido, altera os dados. Isso é comportamento.</p></div></div></section>
+
+<section class="lab-step" id="passo4"><div class="toprow"><span class="step-num">04</span><div><h2>Abstração: construindo um modelo útil</h2><p class="intro">Ative ou desative características para visualizar quais campos fariam parte de uma primeira versão do cadastro de equipamentos.</p></div></div><p class="text-small">Alguns campos são importantes. Outros não ajudam a controlar as locações. A escolha depende do problema que queremos resolver.</p><div class="tag-list" id="fields-to-model"><label class="checktag"><input type="checkbox" value="codigo" checked> Código do equipamento</label><label class="checktag"><input type="checkbox" value="descricao" checked> Descrição</label><label class="checktag"><input type="checkbox" value="valorDiaria" checked> Diária</label><label class="checktag"><input type="checkbox" value="disponivel" checked> Disponibilidade</label><label class="checktag"><input type="checkbox" value="corDoUniforme"> Cor do uniforme do atendente</label><label class="checktag"><input type="checkbox" value="musicaDaRecepcao"> Música da recepção</label><label class="checktag"><input type="checkbox" value="numeroDeSerie"> Número de série</label></div><div class="model-result" style="margin-top:18px"><strong>Prévia do modelo selecionado</strong><pre id="abstraction-output" style="white-space:pre-wrap;margin:9px 0 0;font-size:13px"></pre></div><div class="tip warning" id="abstraction-note" aria-live="polite"></div></section>
+
+<section class="lab-step" id="passo5"><div class="toprow"><span class="step-num">05</span><div><h2>Construindo o modelo de classes</h2><p class="intro">Compare responsabilidades e identifique como os objetos se relacionam na operação.</p></div></div><div class="flow-nodes" id="model-map"><button class="node active" type="button" data-entity="Cliente"><strong>Cliente</strong><span>1 → várias locações</span></button><button class="node" type="button" data-entity="Equipamento"><strong>Equipamento</strong><span>1 → várias locações ao longo do tempo</span></button><button class="node" type="button" data-entity="Locacao"><strong>Locacao</strong><span>Relaciona cliente e equipamento</span></button><button class="node" type="button" data-entity="Pagamento"><strong>Pagamento</strong><span>Vinculado à locação</span></button><button class="node" type="button" data-entity="Funcionario"><strong>Funcionario</strong><span>Realiza o atendimento</span></button></div><div id="model-detail" class="model-detail" aria-live="polite"></div><div class="tip">Em um diagrama UML, cada classe pode ser desenhada como uma caixa com nome, atributos e métodos. No <a href="https://app.diagrams.net/?libs=uml" target="_blank" rel="noopener noreferrer">diagrams.net</a>, reproduza as caixas e associe Cliente e Equipamento a Locacao.</div></section>
+
+<section class="lab-step" id="passo6"><div class="toprow"><span class="step-num">06</span><div><h2>Vendo a modelagem funcionar em Java</h2><p class="intro">O exemplo reúne uma classe Equipamento, dois objetos e uma locação de três dias. É um programa Java executável.</p></div></div><div class="grid two"><div class="panel"><span class="mini-label">O que observar no programa</span><ol><li><span class="inline-code">class Equipamento</span> define o modelo.</li><li><span class="inline-code">new Equipamento(...)</span> cria objetos diferentes.</li><li><span class="inline-code">projetor.alugar()</span> executa um método.</li><li><span class="inline-code">Locacao</span> liga cliente, equipamento e número de dias.</li><li><span class="inline-code">calcularValor()</span> multiplica diária pelos dias.</li></ol><p class="text-small">Para testar, copie o código, abra o OneCompiler Java, substitua o conteúdo do editor e clique em Run.</p></div><div class="panel"><span class="mini-label">Resultado esperado</span><div class="codebox"><div class="codebar">Saída do console</div><pre><code>Cliente: Ana Souza
+Equipamento: Projetor LED
+Diária: R$ 80.00
+Dias: 3
+Valor previsto: R$ 240.00
+Status após alugar: alugado
+Status após devolver: disponível</code></pre></div><div class="actions"><a class="btn green" href="https://onecompiler.org/java" target="_blank" rel="noopener noreferrer">Abrir Java online ↗</a><a class="btn ghost" href="exemplos/Main.java" download="Main.java">Baixar Main.java</a></div></div></div><div style="margin-top:17px" class="codebox"><div class="codebar"><span>Main.java • programa completo</span><button class="btn small" data-copy-target="java-completo">Copiar código</button></div><pre><code id="java-completo">class Cliente {
+    String nome;
+
+    Cliente(String nome) {
+        this.nome = nome;
+    }
+}
+
+class Equipamento {
+    String codigo;
+    String descricao;
+    double valorDiaria;
+    boolean disponivel;
+
+    Equipamento(String codigo, String descricao, double valorDiaria) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.valorDiaria = valorDiaria;
+        this.disponivel = true;
+    }
+
+    boolean alugar() {
+        if (!disponivel) return false;
+        disponivel = false;
+        return true;
+    }
+
+    void devolver() {
+        disponivel = true;
+    }
+}
+
+class Locacao {
+    Cliente cliente;
+    Equipamento equipamento;
+    int dias;
+
+    Locacao(Cliente cliente, Equipamento equipamento, int dias) {
+        this.cliente = cliente;
+        this.equipamento = equipamento;
+        this.dias = dias;
+    }
+
+    double calcularValor() {
+        return equipamento.valorDiaria * dias;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cliente ana = new Cliente("Ana Souza");
+        Equipamento projetor = new Equipamento("EQ-101", "Projetor LED", 80.0);
+        Equipamento notebook = new Equipamento("EQ-102", "Notebook Dell", 120.0);
+        Locacao locacao = new Locacao(ana, projetor, 3);
+
+        System.out.println("Cliente: " + ana.nome);
+        System.out.println("Equipamento: " + projetor.descricao);
+        System.out.printf("Diária: R$ %.2f%n", projetor.valorDiaria);
+        System.out.println("Dias: " + locacao.dias);
+        System.out.printf("Valor previsto: R$ %.2f%n", locacao.calcularValor());
+        projetor.alugar();
+        System.out.println("Status após alugar: " + (projetor.disponivel ? "disponível" : "alugado"));
+        projetor.devolver();
+        System.out.println("Status após devolver: " + (projetor.disponivel ? "disponível" : "alugado"));
+    }
+}</code></pre></div><div class="tip success">Por onde seguir: mude no Java o valor da diária para 90 e o período para 4 dias. Execute novamente e compare o resultado. Se o sistema estiver correto, o total será R$ 360,00.</div></section>
+
+<section class="deliverable"><span class="eyebrow">Hora de praticar</span><h2 class="block-title">Agora você constrói, sem seguir apenas os cliques.</h2><p>Na atividade final, você vai identificar classes, definir atributos e métodos, completar trechos de Java e simular uma locação com seus próprios dados. A correção apresenta orientações.</p><div class="actions"><a class="btn green" href="atividade.html">Ir para atividade prática →</a><a class="btn ghost" href="index.html">Revisar conteúdo</a></div></section>
+</main><footer class="footer"><div class="footer-inner"><span>© 2026 Professor Rodrigo Moreira. Material autoral. Todos os direitos reservados.</span><span>LocaFácil é um exemplo fictício criado para estudo.</span></div></footer><button class="backtop" data-backtop aria-label="Voltar ao topo">↑</button><script src="assets/js/main.js" defer></script><script src="assets/js/lab.js" defer></script></body></html>
